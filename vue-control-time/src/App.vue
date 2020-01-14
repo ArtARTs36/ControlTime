@@ -1,32 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+
+    <Navbar/>
+
+    <div class="container mt-5 mb-5">
+      <router-view/>
     </div>
-    <router-view/>
+
+    <Footer/>
+
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import Navbar from "@/components/Navbar";
+  import Home from "@/components/Home";
+  import Footer from "@/components/Footer";
+  import {mdbRow} from "mdbvue";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  export default {
+    components: {Navbar, Home, mdbRow, Footer}
   }
-}
+
+  document.title = 'Админ-панель';
+</script>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+$image-path: '~@/../mdb/mdbvue/img';
+@import "~mdbvue/lib/scss/mdb-free.scss";
 </style>

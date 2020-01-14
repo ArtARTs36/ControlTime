@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../components/Home'
+import loader from './loader'
+import WorkerList from "../components/Worker/WorkerList";
+import WorkerEdit from "../components/Worker/WorkerEdit";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -11,19 +14,34 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/workers/all',
+    name: 'workerList',
+    component: WorkerList
+  },
+  {
+    path: '/worker/:id/edit',
+    name: 'workerEdit',
+    component: WorkerEdit,
   }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
+
+router.beforeResolve((to, from, next) => {
+  if(to.path) {
+    loader.loaderStart()
+  }
+  next()
+});
+
+router.afterEach((to, from) => {
+  setTimeout(function() {
+    loader.loaderEnd();
+  }, 555);
+});
 
 export default router
