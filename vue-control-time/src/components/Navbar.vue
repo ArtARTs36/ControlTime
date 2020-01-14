@@ -24,6 +24,25 @@
 
                 </mdb-dropdown-menu>
             </mdb-dropdown>
+
+            <mdb-dropdown tag="li" class="nav-item">
+                <mdb-dropdown-toggle tag="a" navLink color="gray" slot="toggle" waves-fixed>Посещения</mdb-dropdown-toggle>
+                <mdb-dropdown-menu>
+
+                    <router-link to="/times/all" tag="li">
+                        <mdb-dropdown-item>
+                            Список
+                        </mdb-dropdown-item>
+                    </router-link>
+
+                    <router-link to="/times/create" tag="li">
+                        <mdb-dropdown-item>
+                            Добавить
+                        </mdb-dropdown-item>
+                    </router-link>
+
+                </mdb-dropdown-menu>
+            </mdb-dropdown>
             <form>
                 <mdb-input type="text" class="text-white" placeholder="Search" aria-label="Search" label navInput waves waves-fixed/>
             </form>

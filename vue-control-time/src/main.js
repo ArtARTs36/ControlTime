@@ -17,6 +17,24 @@ Vue.filter('cutText', function (text, symbolsCount) {
 });
 
 /**
+ * Получить из строки даты только год/месяц/день
+ */
+Vue.filter('renderDate', function (string) {
+    let date = new Date(string);
+
+    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate();
+});
+
+/**
+ * Получить из строки даты только час/минуты
+ */
+Vue.filter('renderTime', function (string) {
+    let date = new Date(string);
+
+    return date.getHours() + ':' + date.getMinutes();
+});
+
+/**
  * Красивое отображение номера телефона)
  */
 Vue.filter('renderPhone', function (phone) {
@@ -25,8 +43,7 @@ Vue.filter('renderPhone', function (phone) {
       return phone;
   }
 
-  return phone[0] + ' (' + phone[1] + phone[2] + phone[3] + ') ' +
-      phone[4] + phone[5] + phone[6] + '-' + phone[7] + phone[8] + '-' + phone[9] + phone[10];
+  return phone[0] + ' (' + phone.slice(1, 4) + ') ' + phone.slice(4, 7) + '-' + phone.slice(7, 9) + '-' + phone.slice(9)
 });
 
 /**

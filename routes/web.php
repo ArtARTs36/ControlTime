@@ -26,3 +26,10 @@ Route::prefix('worker')->group(function() {
     Route::put('{id}', 'WorkerController@UpdateAction');
     Route::delete('{id}', 'WorkerController@DeleteAction');
 });
+
+Route::prefix('times')->group(function() {
+
+    Route::get('/', 'ControlTimeController@ViewListAction');
+    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}','ControlTimeController@ViewListAction');
+    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}','ControlTimeController@ViewListAction');
+});

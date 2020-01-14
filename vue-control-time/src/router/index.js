@@ -4,6 +4,7 @@ import Home from '../components/Home'
 import loader from './loader'
 import WorkerList from "../components/Worker/WorkerList";
 import WorkerEdit from "../components/Worker/WorkerEdit";
+import TimeList from "../components/Time/TimeList";
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/worker/:id/edit',
     name: 'workerEdit',
     component: WorkerEdit,
+  },
+  {
+    path: '/times/all',
+    name: 'timeList',
+    component: TimeList
   }
 ];
 
