@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RequestHelper;
 use App\Models\Worker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ class WorkerController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entryData = $this->checkParams($request, Worker::REQUIRED_FIELDS);
+        $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
 
         $worker = Worker::create($entryData);
 
@@ -50,7 +51,7 @@ class WorkerController extends Controller
      */
     public function updateAction($id, Request $request)
     {
-        $entryData = $this->checkParams($request, Worker::REQUIRED_FIELDS);
+        $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
 
         $worker = Worker::find($id);
 
@@ -79,46 +80,6 @@ class WorkerController extends Controller
         $worker->delete();
 
         return true;
-    }
-
-    /**
-     * Проверка входящих параметров
-     *
-     * @param $data
-     * @param $params
-     * @return array
-     */
-    private function checkParams($data, $params)
-    {
-        $newData = [];
-
-        foreach ($params as $param) {
-            if (isset($data[$param])) {
-                $newData[$param] = $data[$param];
-
-                continue;
-            }
-
-            throw new \LogicException('Не передан параметр: '. $param);
-        }
-
-        return $newData;
-    }
-
-    /**
-     * Получить данные о записи из запроса
-     *
-     * @param Request $request
-     * @return array
-     */
-    private function getEntryData(Request $request)
-    {
-        $data = $request->all();
-        if (!isset($data['entryData'])) {
-            throw new \LogicException('Не получены данные о работнике!');
-        }
-
-        return $this->checkParams($data['entryData'], Worker::REQUIRED_FIELDS);
     }
 }
 
