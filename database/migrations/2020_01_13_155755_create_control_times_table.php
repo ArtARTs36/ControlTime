@@ -24,7 +24,7 @@ class CreateControlTimesTable extends Migration
         });
 
         Schema::table(self::TABLE, function (Blueprint $table) {
-            $table->foreign('worker_id')->references('id')->on('workers');
+            $table->foreign('worker_id')->references('id')->on('workers')->onDelete('cascade');
         });
     }
 

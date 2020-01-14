@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +20,7 @@ class CreateWorkersTable extends Migration
             $table->string('patronymic', 20);
             $table->string('family', 20);
             $table->string('phone', 11);
-            $table->dateTime('hired_date');
+            $table->dateTime('hired_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
