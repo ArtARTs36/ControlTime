@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\RequestHelper;
 use App\Models\ControlTime;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ControlTimeController extends Controller
@@ -17,14 +16,32 @@ class ControlTimeController extends Controller
      * @param null $page
      * @param string $sortKey
      * @param string $sortDirection
+     * @param int $count
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function viewListAction($page = null, $sortKey = 'id', $sortDirection = 'desc')
+    public function viewListAction(
+        $page = null,
+        $sortKey = 'id',
+        $sortDirection = 'desc',
+        $count = self::COUNT_WORKERS_IN_ONE_PAGE
+    )
     {
-        $workers = DB::table(ControlTime::TABLE)->orderBy($sortKey, $sortDirection)
-            ->paginate(self::COUNT_WORKERS_IN_ONE_PAGE, ['*'], 'page_workers', $page);
+        $times = ControlTime::with('worker');
 
-        return $workers;
+        // todo заплатка, при джоине теряю айдишник контролТайм - как поступить элегатнее - пока хз
+        $times->selectRaw('*, control_times.id as time_id');
+
+        if ($sortKey == 'date') {
+            $times->orderByRaw("DAY(start_date), MONTH(start_date), YEAR(start_date) {$sortDirection}");
+        } elseif ($sortKey == 'worker') {
+            $times->join('workers as w', 'control_times.worker_id', '=', 'w.id')
+                ->orderBy('w.family', $sortDirection)->orderBy('w.name', $sortDirection);
+        }
+        else {
+            $times->orderBy($sortKey, $sortDirection);
+        }
+
+        return $times->paginate($count, ['*'], 'page_workers', $page);
     }
 
     /**
