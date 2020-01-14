@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Models\Worker;
 use Illuminate\Http\Request;
@@ -25,6 +26,19 @@ class WorkerController extends Controller
             ->paginate(self::COUNT_WORKERS_IN_ONE_PAGE, ['*'], 'page_workers', $page);
 
         return $workers;
+    }
+
+    /**
+     * Получить информацию о работнике
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function viewWorkerAction($id)
+    {
+        $worker = Worker::find($id);
+
+        return $worker;
     }
 
     /**
@@ -55,20 +69,20 @@ class WorkerController extends Controller
 
         $worker = Worker::find($id);
 
-        foreach (Worker::REQUIRED_FIELDS as $field => $value) {
-            $worker->$field = $entryData[$value];
+        foreach (Worker::REQUIRED_FIELDS as $field) {
+            $worker->$field = $entryData[$field];
         }
 
         $worker->save();
 
-        return $worker;
+        return new FrontendResponse(true, $worker);
     }
 
     /**
      * Удаление работника
      *
      * @param integer $id
-     * @return bool
+     * @return array
      */
     public function deleteAction($id)
     {
@@ -79,7 +93,7 @@ class WorkerController extends Controller
 
         $worker->delete();
 
-        return true;
+        return ['success' => true];
     }
 }
 
