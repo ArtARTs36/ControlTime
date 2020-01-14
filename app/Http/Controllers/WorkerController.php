@@ -18,12 +18,18 @@ class WorkerController extends Controller
      * @param null $page
      * @param string $sortKey
      * @param string $sortDirection
+     * @param int $count
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function viewListAction($page = null, $sortKey = 'id', $sortDirection = 'desc')
+    public function viewListAction(
+        $page = null,
+        $sortKey = 'id',
+        $sortDirection = 'desc',
+        $count = self::COUNT_WORKERS_IN_ONE_PAGE
+    )
     {
         $workers = DB::table(Worker::TABLE)->orderBy($sortKey, $sortDirection)
-            ->paginate(self::COUNT_WORKERS_IN_ONE_PAGE, ['*'], 'page_workers', $page);
+            ->paginate($count, ['*'], 'page_workers', $page);
 
         return $workers;
     }
