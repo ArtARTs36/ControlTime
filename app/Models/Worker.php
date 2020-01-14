@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name - Имя
  * @property string $patronymic - Отчество
  * @property string $family - Фамилия
+ * @property \DateTime $hired_date - Дата принятия на работу
  *
  * @package App
  */

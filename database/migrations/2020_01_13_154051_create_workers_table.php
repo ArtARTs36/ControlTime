@@ -19,6 +19,7 @@ class CreateWorkersTable extends Migration
             $table->string('patronymic', 20);
             $table->string('family', 20);
             $table->string('phone', 11);
+            $table->dateTime('hired_date');
             $table->timestamps();
         });
     }
