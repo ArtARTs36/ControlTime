@@ -16,12 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ControlTime extends Model
 {
-    protected $fillable = [
+    const TABLE = 'control_times';
+
+    const REQUIRED_FIELDS = [
         'id',
         'start_date',
         'end_date',
         'worker_id'
     ];
+
+    protected $fillable = self::REQUIRED_FIELDS;
 
     public $timestamps = false;
 
