@@ -58,6 +58,12 @@ Vue.filter('renderPhone', function (phone) {
   return phone[0] + ' (' + phone.slice(1, 4) + ') ' + phone.slice(4, 7) + '-' + phone.slice(7, 9) + '-' + phone.slice(9)
 });
 
+function declOfNum(number, titles)
+{
+    let cases = [2, 0, 1, 1, 1, 2];
+    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
+}
+
 /**
  * todo не уверен, что всегда правильно посчитает
  */
@@ -74,8 +80,9 @@ Vue.filter('renderExperience', function (string) {
         return 'только устроен';
     }
 
-    return ((years > 0) ? years + ' лет ' : '') +
-        ((months > 0) ? months + ' месяцев ' : '') + days + ' дней';
+    return ((years > 0) ? years + ' ' + declOfNum(years, ['год', 'года', 'лет']) : '') + ' ' +
+        ((months > 0) ? months + ' ' + declOfNum(months, ['месяц', 'месяца', 'месяцев']) : '') + ' ' +
+        days + ' ' + declOfNum(days,['день', 'дня', 'дней']);
 });
 
 Vue.config.productionTip = false;
