@@ -8,15 +8,28 @@
             <form @submit="checkForm">
                 <mdb-card-text>
                     <div class="form-group">
-                        Дата
+                        Дата прихода
                         <mdl-datepicker
-                            v-bind:minDate="new Date(worker.hired_date)"
+                            v-bind:minDate="minDate"
                             v-bind:disableYearSelection
-                                ="new Date(worker.hired_date).getFullYear() === new Date().getFullYear()"
-                            v-bind:maxDate="new Date()"
+                                ="disableYearSelection"
+                            v-bind:maxDate="currentDate"
                             orientation="landscape"
-                            v-model="time.date"
-                            :default="time.date"
+                            v-model="time.start_date"
+                            :default="time.start_date"
+                        ></mdl-datepicker>
+                    </div>
+
+                    <div class="form-group">
+                        Дата ухода
+                        <mdl-datepicker
+                            v-bind:minDate="minDate"
+                            v-bind:disableYearSelection
+                                ="disableYearSelection"
+                            v-bind:maxDate="currentDate"
+                            orientation="landscape"
+                            v-model="time.end_date"
+                            :default="time.end_date"
                         ></mdl-datepicker>
                     </div>
 
@@ -74,12 +87,24 @@
 
             let blankTime = this.createGoodTime(new Date());
 
+            let blankEndTime = new Date();
+
+            if (blankEndTime.getHours() + 4 < 24) {
+                blankEndTime.setHours(blankEndTime.getHours() + 4);
+            }
+
             const time = {
                 worker_id: this.$route.params.workerId,
-                date: new Date(),
+                start_date: new Date(),
+                end_date: new Date(),
                 start_time: blankTime,
-                end_time: blankTime
+                end_time: blankEndTime
             };
+
+            let currentDate = new Date();
+
+            let minDate = new Date();
+            minDate.setDate(currentDate.getDate() - 32);
 
             return {
                 error: null,
@@ -95,7 +120,11 @@
                         firstDayOfWeek: 1,
                     },
                     monthBeforeYear: false
-                }
+                },
+                disableYearSelection: false,
+                hiredDate: null,
+                currentDate,
+                minDate
             }
         },
 
@@ -125,6 +154,15 @@
                 axios.get(API_URL + '/worker/' + this.workerId)
                     .then(response => {
                         this.worker = response.data;
+
+                        this.hiredDate = new Date(this.worker.hired_date);
+                        if (this.hiredDate > this.minDate) {
+                            this.minDate = this.hiredDate;
+                        }
+
+                        if (this.hiredDate.getFullYear() === this.currentDate.getFullYear()) {
+                            this.disableYearSelection = true;
+                        }
                     })
                     .catch(e => {
                         this.error = e;
@@ -138,10 +176,6 @@
 
                 if (!(this.worker.id > 0)) {
                     this.formErrors.push('Не указан сотрудник');
-                }
-
-                if (this.time.end_time <= this.time.start_time) {
-                    this.formErrors.push('Время ухода раньше, чем время прихода!');
                 }
 
                 if (!this.formErrors.length) {

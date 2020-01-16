@@ -14,10 +14,10 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col" v-if="!workerId">Сотрудник</th>
-                        <th scope="col">Дата</th>
-                        <th scope="col">День недели</th>
-                        <th scope="col">Приход</th>
-                        <th scope="col">Уход</th>
+                        <th scope="col">Дата прихода</th>
+                        <th scope="col">Время прихода</th>
+                        <th scope="col">Дата ухода</th>
+                        <th scope="col">Время ухода</th>
                     </tr>
                     </thead>
                     <tr v-for="item in times">
@@ -31,9 +31,9 @@
                                 <i class="far fa-calendar-alt" title="Посмотреть всю посещаемость сотрудника"></i>
                             </router-link>
                         </td>
-                        <td>{{ item.date }}</td>
-                        <td>{{ item.date | dayOfWeek }}</td>
+                        <td>{{ item.start_date }} ({{ item.start_date | dayOfWeek }})</td>
                         <td>{{ item.start_time}}</td>
+                        <td>{{ item.end_date }} ({{ item.end_date | dayOfWeek }})</td>
                         <td>{{ item.end_time }}</td>
                     </tr>
                 </table>

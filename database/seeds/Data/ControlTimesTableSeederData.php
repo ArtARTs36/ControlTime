@@ -30,10 +30,12 @@ class ControlTimesTableSeederData
 
                 $date = self::setTimeComing($date);
                 $endTime = self::genDateCare($date);
+                $dateString = $date->format('Y-m-d');
 
                 $times[] = [
                     'worker_id' => $worker->id,
-                    'date' => $date->format('Y-m-d'),
+                    'start_date' => $dateString,
+                    'end_date' => $dateString,
                     'start_time' => $date->format('H:i:s'),
                     'end_time' => $endTime->format('H:i:s')
                 ];

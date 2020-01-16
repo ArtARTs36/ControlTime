@@ -18,7 +18,8 @@ class CreateControlTimesTable extends Migration
         Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
             // 0000-00-00
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
 
             // 00:00:00
             $table->time('start_time');

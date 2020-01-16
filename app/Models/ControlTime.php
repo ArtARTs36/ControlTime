@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
  * Class ControlTime
  *
  * @property integer $id - Идентификатор
- * @property \DateTime $date - Дата прихода
+ *
+ * @property \DateTime $start_date - Дата прихода
  * @property \DateTime $start_time - Время прихода
+ *
+ * @property \DateTime $end_date - Дата ухода
  * @property \DateTime $end_time - Время ухода
+ *
  * @property integer $worker_id - Идентификатор работника
  *
  * @package App
@@ -21,8 +25,9 @@ class ControlTime extends Model
 
     const REQUIRED_FIELDS = [
         'id',
-        'date',
+        'start_date',
         'start_time',
+        'end_date',
         'end_time',
         'worker_id'
     ];
