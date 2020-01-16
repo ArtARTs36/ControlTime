@@ -37,9 +37,6 @@
 
                 </mdb-dropdown-menu>
             </mdb-dropdown>
-            <form>
-                <mdb-input type="text" class="text-white" placeholder="Search" aria-label="Search" label navInput waves waves-fixed/>
-            </form>
         </mdb-navbar-toggler>
     </mdb-navbar>
 </template>
@@ -63,6 +60,8 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style>
+.dropdown-toggler {
+    color:white;
+}
 </style>

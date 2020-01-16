@@ -7,14 +7,16 @@
                     <thead>
                         <tr>
                             <th>Сотрудник</th>
-                            <th>Дата прихода</th>
-                            <th>Дата ухода</th>
+                            <th>Дата</th>
+                            <th>Время прихода</th>
+                            <th>Время ухода</th>
                         </tr>
                     </thead>
                     <tr v-for="item in times">
                         <td>{{ item.worker.family }} {{ item.worker.name }}</td>
-                        <td>{{ item.start_date }}</td>
-                        <td>{{ item.end_date }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.start_time }}</td>
+                        <td>{{ item.end_time }}</td>
                     </tr>
                 </table>
             </mdb-card-text>
@@ -46,7 +48,22 @@
             }
         },
 
+        methods: {
+            loadTimes() {
+                const URL = API_URL + '/times/page-1/sort/id-desc/count-7';
+
+                axios.get(URL)
+                    .then(response => {
+                        this.times = response.data.data;
+                    })
+                    .catch(e => {
+                        this.error=e;
+                    });
+            }
+        },
+
         created() {
+            this.loadTimes();
         }
     }
 </script>
