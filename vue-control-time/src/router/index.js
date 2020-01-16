@@ -36,6 +36,11 @@ const routes = [
     component: TimeList
   },
   {
+    path: '/times/worker-:workerId',
+    name: 'timeListByWorker',
+    component: TimeList
+  },
+  {
     path: '/times/create/worker/:workerId',
     name: 'timeCreate',
     component: TimeCreate

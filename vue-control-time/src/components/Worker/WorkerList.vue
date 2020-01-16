@@ -32,8 +32,12 @@
                             {{ item.hired_date | renderExperience}}
                         </td>
                         <td>
+                            <router-link :to="{ name: 'timeListByWorker', params: { workerId: item.id }}">
+                                <i class="far fa-calendar-alt" title="Посмотреть посещаемость"></i>
+                            </router-link>
+
                             <router-link :to="{ name: 'timeCreate', params: { workerId: item.id }}">
-                                <i class="fas fa-plus" title="Добавить отметку о посещении"></i>
+                                <i class="fas fa-plus ml-2" title="Добавить отметку о посещении"></i>
                             </router-link>
 
                             <a class="far fa-trash-alt ml-2" @click="removeWorker(item.id)" title="Удалить сотрудника"></a>

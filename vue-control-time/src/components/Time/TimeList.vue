@@ -53,10 +53,6 @@
                 currentPage: 1,
                 sortVars: [
                     {
-                        'prepare': 'id-asc',
-                        'description': 'Сортировать по'
-                    },
-                    {
                         'prepare': 'id-desc',
                         'description': 'Сортировать по ID записи (убывание)'
                     },
@@ -81,7 +77,7 @@
                         'description': 'Сортировать по сотруднику (убывание)'
                     }
                 ],
-                sortType: 'id-desc'
+                sortType: 'date-desc'
             }
         },
 
@@ -108,7 +104,12 @@
                     page = this.currentPage;
                 }
 
-                const URL = API_URL + '/times/page-' + page + '/sort/' + this.sortType;
+                let URL = API_URL + '/times/page-' + page + '/sort/' + this.sortType + '/count-'
+                    + this.maxCountEntriesForOnePage;
+
+                if (this.$route.params.workerId > 0) {
+                    URL += '/workerId-' + this.$route.params.workerId;
+                }
 
                 axios.get(URL)
                     .then(response => {

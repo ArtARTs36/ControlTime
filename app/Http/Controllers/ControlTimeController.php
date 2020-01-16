@@ -18,19 +18,25 @@ class ControlTimeController extends Controller
      * @param string $sortKey
      * @param string $sortDirection
      * @param int $count
+     * @param int $workerId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function viewListAction(
         $page = null,
         $sortKey = 'id',
         $sortDirection = 'desc',
-        $count = self::COUNT_WORKERS_IN_ONE_PAGE
+        $count = self::COUNT_WORKERS_IN_ONE_PAGE,
+        $workerId = null
     )
     {
         $times = ControlTime::with('worker');
 
         // todo заплатка, при джоине теряю айдишник контролТайм - как поступить элегатнее - пока хз
         $times->selectRaw('*, control_times.id as time_id');
+
+        if ($workerId !== null) {
+            $times->where('worker_id', '=', (int) $workerId);
+        }
 
         if ($sortKey == 'date') {
             $times->orderBy('date', $sortDirection);
@@ -42,7 +48,7 @@ class ControlTimeController extends Controller
             $times->orderBy($sortKey, $sortDirection);
         }
 
-        return $times->paginate($count, ['*'], 'page_workers', $page);
+        return $times->paginate($count, ['*'], 'page_times', $page);
     }
 
     /**
