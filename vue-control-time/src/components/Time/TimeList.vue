@@ -18,7 +18,11 @@
                     </thead>
                     <tr v-for="item in times">
                         <td>{{ item.time_id }}</td>
-                        <td>{{ item.worker.family}} {{ item.worker.name }}</td>
+                        <td>
+                            <router-link :to="{ name: 'workerEdit', params: { id: item.worker.id }}">
+                                {{ item.worker.family}} {{ item.worker.name }}
+                            </router-link>
+                        </td>
                         <td>{{ item.date }}</td>
                         <td>{{ item.start_time}}</td>
                         <td>{{ item.end_time }}</td>

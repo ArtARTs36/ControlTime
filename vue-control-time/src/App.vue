@@ -4,7 +4,7 @@
     <Navbar/>
 
     <div class="container mt-5 mb-5">
-      <router-view/>
+      <router-view :key="$route.fullPath"/>
     </div>
 
     <Footer/>

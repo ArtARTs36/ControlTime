@@ -26,6 +26,11 @@ const routes = [
     component: WorkerEdit,
   },
   {
+    path: '/workers/create',
+    name: 'workerEdit',
+    component: WorkerEdit,
+  },
+  {
     path: '/times/all',
     name: 'timeList',
     component: TimeList

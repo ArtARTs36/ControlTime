@@ -59,7 +59,7 @@ class WorkerController extends Controller
 
         $worker = Worker::create($entryData);
 
-        return $worker;
+        return new FrontendResponse(true, $worker);
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-    <mdb-card v-if="worker.id > 0">
+    <mdb-card>
         <mdb-card-body>
             <mdb-card-title>Сотрудник: {{ worker.name }} {{ worker.family }}</mdb-card-title>
 
@@ -54,7 +54,8 @@
                 formErrors: [],
                 linkList: '/workers/all',
                 workerId: this.$route.params.id,
-                worker: blankWorker
+                worker: blankWorker,
+                typeAction: (this.$route.params.id > 0) ? 'put' : 'post'
             }
         },
 
@@ -63,22 +64,28 @@
                 this.resultSave = null;
 
                 const options = {
-                  'entryData': this.worker
+                    'entryData': this.worker
                 };
 
-                axios.put(API_URL + '/worker/' + this.workerId, options)
-                    .then((response) => {
-                        if (response.data.success) {
-                            this.resultSave = 'Данные успешно сохранены!';
-                            this.worker = response.data.entryData;
-                        } else {
-                            this.resultSave = response.data.message;
-                        }
-                    })
-                    .catch((error) => {
-                        this.resultSave = error;
-                    })
-                    .finally(() => (this.isOpenModalResult = true));
+                let request;
+                if (this.typeAction === 'put') {
+                    request = axios.put(API_URL + '/worker/' + this.workerId, options);
+                } else {
+                    request = axios.post(API_URL + '/worker/', options);
+                }
+
+                request.then((response) => {
+                    if (response.data.success) {
+                        this.resultSave = 'Данные успешно сохранены!';
+                        this.worker = response.data.entryData;
+                    } else {
+                        this.resultSave = response.data.message;
+                    }
+                })
+                .catch((error) => {
+                    this.resultSave = error;
+                })
+                .finally(() => (this.isOpenModalResult = true));
             },
             loadWorker() {
                 axios.get(API_URL + '/worker/' + this.workerId)
@@ -90,6 +97,7 @@
                     }).finally(() => (document.title = 'Сотрудник: ' + this.worker.name + ' ' + this.worker.family));
             },
             checkForm(e) {
+                e.preventDefault();
                 this.formErrors = [];
                 this.resultSave = '';
 
@@ -133,9 +141,12 @@
                 this.isOpenModalResult = false;
             }
         },
-
         created() {
-            this.loadWorker();
+            if (this.workerId > 0) {
+                this.loadWorker();
+            } {
+                document.title = 'Добавить сотрудника';
+            }
         }
     }
 </script>
