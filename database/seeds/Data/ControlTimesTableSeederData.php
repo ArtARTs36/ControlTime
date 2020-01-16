@@ -21,6 +21,13 @@ class ControlTimesTableSeederData
 
             for ($i = 1; $i < $days; $i++) {
                 $date = self::createDateByOffsetDay($hiredDate, $i);
+                $dayOfWeek = $date->format('D');
+
+                // Пропускаем выходные
+                if ($dayOfWeek == 'Sun' || $dayOfWeek == 'Sat') {
+                    continue;
+                }
+
                 $date = self::setTimeComing($date);
                 $endTime = self::genDateCare($date);
 

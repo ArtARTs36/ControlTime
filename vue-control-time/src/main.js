@@ -9,6 +9,10 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 
 window.API_URL = 'http://localhost:8000';
 
+const daysOfWeek = [
+    'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'
+];
+
 Vue.filter('cutText', function (text, symbolsCount) {
   return text.length > symbolsCount
       ? text.slice(0, symbolsCount - 3) + '...'
@@ -31,6 +35,15 @@ Vue.filter('renderTime', function (string) {
     let date = new Date(string);
 
     return date.getHours() + ':' + date.getMinutes();
+});
+
+/**
+ * Получить из строки даты день недели
+ */
+Vue.filter('dayOfWeek', function (string) {
+    let date = new Date(string);
+
+    return daysOfWeek[date.getDay()];
 });
 
 /**

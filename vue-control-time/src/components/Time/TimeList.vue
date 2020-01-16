@@ -12,6 +12,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Сотрудник</th>
                         <th scope="col">Дата</th>
+                        <th scope="col">День недели</th>
                         <th scope="col">Приход</th>
                         <th scope="col">Уход</th>
                     </tr>
@@ -24,6 +25,7 @@
                             </router-link>
                         </td>
                         <td>{{ item.date }}</td>
+                        <td>{{ item.date | dayOfWeek }}</td>
                         <td>{{ item.start_time}}</td>
                         <td>{{ item.end_time }}</td>
                     </tr>
