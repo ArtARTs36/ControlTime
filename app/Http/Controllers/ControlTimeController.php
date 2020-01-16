@@ -33,7 +33,7 @@ class ControlTimeController extends Controller
         $times->selectRaw('*, control_times.id as time_id');
 
         if ($sortKey == 'date') {
-            $times->orderByRaw("DAY(start_date), MONTH(start_date), YEAR(start_date) {$sortDirection}");
+            $times->orderBy('date', $sortDirection);
         } elseif ($sortKey == 'worker') {
             $times->join('workers as w', 'control_times.worker_id', '=', 'w.id')
                 ->orderBy('w.family', $sortDirection)->orderBy('w.name', $sortDirection);

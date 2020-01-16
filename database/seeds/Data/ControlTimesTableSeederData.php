@@ -7,30 +7,28 @@ class ControlTimesTableSeederData
     /** @var \DateTime */
     private static $currentDate = null;
 
-    private static $count = null;
-
     public static function buildArray()
     {
+        self::$currentDate = new \DateTime();
         self::$workers = \App\Models\Worker::all();
 
         $times = [];
 
         foreach (self::$workers as $worker) {
             $hiredDate = new \DateTime($worker->hired_date);
-
             // Количество дней, прошедших со времени принятия на работу
             $days = self::getDiffDays($hiredDate);
 
             for ($i = 1; $i < $days; $i++) {
-                $startDate = $hiredDate->modify("+ {$i} days");
-                $startDate = self::setTimeComing($startDate);
-                $endDate = self::genDateCare($startDate);
+                $date = self::createDateByOffsetDay($hiredDate, $i);
+                $date = self::setTimeComing($date);
+                $endTime = self::genDateCare($date);
 
                 $times[] = [
-                  'worker_id' => $worker->id,
-                  'date' => $startDate->format('Y-m-d'),
-                  'start_time' => $startDate->format('H:i:s'),
-                  'end_time' => $endDate->format('H:i:s')
+                    'worker_id' => $worker->id,
+                    'date' => $date->format('Y-m-d'),
+                    'start_time' => $date->format('H:i:s'),
+                    'end_time' => $endTime->format('H:i:s')
                 ];
             }
         }
@@ -40,10 +38,6 @@ class ControlTimesTableSeederData
 
     private static function getDiffDays($hiredDate)
     {
-        if (self::$currentDate === null) {
-            self::$currentDate = new \DateTime();
-        }
-
         $interval = self::$currentDate->diff($hiredDate);
 
         return abs($interval->format('%R%a'));
@@ -69,7 +63,7 @@ class ControlTimesTableSeederData
     private static function genDateCare(\DateTime $date)
     {
         // Час прихода на рабочее место
-        $hourComing = (int) $date->format('H');
+        $hourComing = (int)$date->format('H');
 
         // Сколько часов осталось в дне
         $leftHoursInDay = 24 - $hourComing - 1;
@@ -80,6 +74,13 @@ class ControlTimesTableSeederData
         $newDate = clone $date;
 
         return $newDate->modify("+ {$hourCare} hours");
+    }
+
+    private static function createDateByOffsetDay(\DateTime $dateTime, $day)
+    {
+        $newDate = clone $dateTime;
+
+        return $newDate->modify("+ {$day} days");
     }
 }
 

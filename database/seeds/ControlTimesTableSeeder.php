@@ -9,9 +9,12 @@ class ControlTimesTableSeeder extends Seeder
 {
     public function run()
     {
-        $times = ControlTimesTableSeederData::buildArray();
+        dump('...Наполнение данных о посещаемости займет некоторое время ;)');
 
-        DB::table('control_times')->insert(ControlTimesTableSeederData::buildArray());
+        $times = ControlTimesTableSeederData::buildArray();
+        shuffle($times);
+
+        DB::table('control_times')->insert($times);
     }
 }
 
