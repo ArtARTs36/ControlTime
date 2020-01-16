@@ -28,8 +28,9 @@ class ControlTimesTableSeederData
 
                 $times[] = [
                   'worker_id' => $worker->id,
-                  'start_date' => $startDate->format('Y-m-d H:i:s'),
-                  'end_date' => $endDate->format('Y-m-d H:i:s')
+                  'date' => $startDate->format('Y-m-d'),
+                  'start_time' => $startDate->format('H:i:s'),
+                  'end_time' => $endDate->format('H:i:s')
                 ];
             }
         }

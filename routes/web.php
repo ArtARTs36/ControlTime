@@ -32,4 +32,5 @@ Route::prefix('times')->group(function() {
     Route::get('/', 'ControlTimeController@ViewListAction');
     Route::get('/page-{page}/sort/{sortKey}-{sortDirection}','ControlTimeController@ViewListAction');
     Route::get('/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}','ControlTimeController@ViewListAction');
+    Route::post('/','ControlTimeController@CreateAction');
 });

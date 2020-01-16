@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Models\ControlTime;
 use Illuminate\Http\Request;
@@ -53,38 +54,41 @@ class ControlTimeController extends Controller
      */
     public function createAction(Request $request)
     {
-        $requiredFields = array_merge(ControlTime::REQUIRED_FIELDS, ['worker_id']);
-        $data = RequestHelper::getEntryData($request, $requiredFields);
+        $data = RequestHelper::getEntryData($request, [
+            'date', 'start_time', 'end_time', 'worker_id'
+        ]);
 
-        $startDate = new \DateTime($data['start_date']);
-        $endDate = new \DateTime($data['end_date']);
+        $workerId = (int) $data['worker_id'];
 
-        $startYear = (int)$startDate->format('Y');
-        $startMonth = (int)$startDate->format('m');
-        $startDay = (int)$startDate->format('d');
+        $date = new \DateTime($data['date']);
 
-        $endYear = (int)$endDate->format('Y');
-        $endMonth = (int)$endDate->format('m');
-        $endDay = (int)$endDate->format('d');
+        $startTime = new \DateTime($data['start_time']);
+        $endTime = new \DateTime($data['end_time']);
 
-        if (!($startYear == $endYear && $startMonth == $endMonth && $startDay == $endDay)) {
-            throw new \LogicException('С датами что-то не так!');
+        if ((int) $endTime->format('H') < (int) $startTime->format('H')) {
+            return new FrontendResponse(false, null, 'Время ухода раньше, чем время прихода!');
         }
 
         $existTime = ControlTime::query()
-            ->where('YEAR(hired_date)', '=', $startYear)
-            ->where('MONTH(hired_date)', '=', $startMonth)
-            ->where('DAY(hired_date)', '=', $startDay);
+            ->whereRaw("YEAR(date) = :year", ['year' => (int)$date->format('Y')])
+            ->whereRaw("MONTH(date) = :month", ['month' => (int)$date->format('m')])
+            ->whereRaw("DAY(date) = :day", ['day' => (int)$date->format('d')])
+            ->whereRaw("worker_id = {$workerId}")
+            ->get()
+            ->first();
 
         if (null !== $existTime) {
-            throw new \LogicException('Данные за этот день уже внесены!');
+            return new FrontendResponse(false, null,'Данные за этот день уже внесены!');
         }
 
         $time = ControlTime::create([
-            $data
+            'date' => $date,
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'worker_id' => $workerId
         ]);
 
-        return $time;
+        return new FrontendResponse(true, $time);
     }
 }
 
