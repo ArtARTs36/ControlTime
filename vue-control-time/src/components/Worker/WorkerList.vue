@@ -32,7 +32,11 @@
                             {{ item.hired_date | renderExperience}}
                         </td>
                         <td>
-                            <a class="far fa-trash-alt" @click="removeWorker(item.id)" title="Удалить сотрудника"></a>
+                            <router-link :to="{ name: 'timeCreate', params: { workerId: item.id }}">
+                                <i class="fas fa-plus" title="Добавить отметку о посещении"></i>
+                            </router-link>
+
+                            <a class="far fa-trash-alt ml-2" @click="removeWorker(item.id)" title="Удалить сотрудника"></a>
 
                             <router-link :to="{ name: 'workerEdit', params: { id: item.id }}">
                                 <i class="far fa-edit ml-2" title="Редактировать"></i>

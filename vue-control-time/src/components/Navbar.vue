@@ -35,12 +35,6 @@
                         </mdb-dropdown-item>
                     </router-link>
 
-                    <router-link to="/times/create" tag="li">
-                        <mdb-dropdown-item>
-                            Добавить
-                        </mdb-dropdown-item>
-                    </router-link>
-
                 </mdb-dropdown-menu>
             </mdb-dropdown>
             <form>

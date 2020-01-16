@@ -17,11 +17,11 @@
                     </tr>
                     </thead>
                     <tr v-for="item in times">
-                        <td>{{ item.id }}</td>
+                        <td>{{ item.time_id }}</td>
                         <td>{{ item.worker.family}} {{ item.worker.name }}</td>
-                        <td>{{ item.start_date | renderDate }}</td>
-                        <td>{{ item.start_date | renderTime }}</td>
-                        <td>{{ item.end_date | renderTime }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.start_time}}</td>
+                        <td>{{ item.end_time }}</td>
                     </tr>
                 </table>
             </mdb-card-text>
