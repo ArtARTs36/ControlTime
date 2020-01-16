@@ -1,7 +1,10 @@
 <template>
     <mdb-card>
         <mdb-card-body>
-            <mdb-card-title>Список посещений</mdb-card-title>
+            <mdb-card-title v-if="!workerId">Список посещений</mdb-card-title>
+            <mdb-card-title v-else>
+                Список посещений сотрудника {{ times[0].worker.name }} {{ times[0].worker.family }}
+            </mdb-card-title>
             <select class="browser-default custom-select" @change="changeSort" v-model="sortType">
                 <option v-for="sort in sortVars" :value="sort.prepare">{{ sort.description }}</option>
             </select>
@@ -10,7 +13,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Сотрудник</th>
+                        <th scope="col" v-if="!workerId">Сотрудник</th>
                         <th scope="col">Дата</th>
                         <th scope="col">День недели</th>
                         <th scope="col">Приход</th>
@@ -19,9 +22,13 @@
                     </thead>
                     <tr v-for="item in times">
                         <td>{{ item.time_id }}</td>
-                        <td>
+                        <td v-if="!workerId">
                             <router-link :to="{ name: 'workerEdit', params: { id: item.worker.id }}">
                                 {{ item.worker.family}} {{ item.worker.name }}
+                            </router-link>
+
+                            <router-link :to="{ name: 'timeListByWorker', params: { workerId: item.worker.id }}">
+                                <i class="far fa-calendar-alt" title="Посмотреть всю посещаемость сотрудника"></i>
                             </router-link>
                         </td>
                         <td>{{ item.date }}</td>
@@ -31,6 +38,12 @@
                     </tr>
                 </table>
             </mdb-card-text>
+
+            <router-link :to="{ name: 'timeList' }" v-if="workerId > 0">
+                <mdb-btn style="width:100%" color="primary">
+                    Открыть посещаемость всех сотрудников
+                </mdb-btn>
+            </router-link>
 
             <Pagination v-bind:totalCount="totalCount" @openPage="refreshTimes" v-if="isLoadEntries"/>
         </mdb-card-body>
@@ -43,31 +56,29 @@
     import Pagination from '@/components/Pagination';
     export default {
         data() {
-            return {
-                times: [],
-                error: null,
-                totalCount: null,
-                maxCountEntriesForOnePage: 10,
-                isLoadEntries: false,
-                currentOffset: 0,
-                currentPage: 1,
-                sortVars: [
-                    {
-                        'prepare': 'id-desc',
-                        'description': 'Сортировать по ID записи (убывание)'
-                    },
-                    {
-                        'prepare': 'id-asc',
-                        'description': 'Сортировать по ID записи (возрастание)'
-                    },
-                    {
-                        'prepare': 'date-desc',
-                        'description': 'Сортировать по дате (убывание)'
-                    },
-                    {
-                        'prepare': 'date-asc',
-                        'description': 'Сортировать по дате (возрастание)'
-                    },
+            let workerId = this.$route.params.workerId;
+
+            let sortVars = [
+                {
+                    'prepare': 'id-desc',
+                    'description': 'Сортировать по ID записи (убывание)'
+                },
+                {
+                    'prepare': 'id-asc',
+                    'description': 'Сортировать по ID записи (возрастание)'
+                },
+                {
+                    'prepare': 'date-desc',
+                    'description': 'Сортировать по дате (убывание)'
+                },
+                {
+                    'prepare': 'date-asc',
+                    'description': 'Сортировать по дате (возрастание)'
+                }
+            ];
+
+            if (!workerId) {
+                sortVars.push(
                     {
                         'prepare': 'worker-asc',
                         'description': 'Сортировать по сотруднику (возрастание)'
@@ -76,8 +87,20 @@
                         'prepare': 'worker-desc',
                         'description': 'Сортировать по сотруднику (убывание)'
                     }
-                ],
-                sortType: 'date-desc'
+                );
+            }
+
+            return {
+                times: [],
+                error: null,
+                totalCount: null,
+                maxCountEntriesForOnePage: 10,
+                isLoadEntries: false,
+                currentOffset: 0,
+                currentPage: 1,
+                sortVars,
+                sortType: 'date-desc',
+                workerId
             }
         },
 
@@ -108,7 +131,7 @@
                     + this.maxCountEntriesForOnePage;
 
                 if (this.$route.params.workerId > 0) {
-                    URL += '/workerId-' + this.$route.params.workerId;
+                    URL += '/workerId-' + this.workerId;
                 }
 
                 axios.get(URL)
