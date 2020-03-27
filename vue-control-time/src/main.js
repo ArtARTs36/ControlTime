@@ -19,6 +19,12 @@ Vue.filter('cutText', function (text, symbolsCount) {
       : text;
 });
 
+Vue.filter('dateOnlyMd', function (originalDate) {
+    let date = new Date(originalDate);
+
+    return date.getDate() + '/' + (date.getMonth() + 1);
+});
+
 /**
  * Получить из строки даты только год/месяц/день
  */

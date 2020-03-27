@@ -12,11 +12,7 @@
 
    > выполнить команду (накатить миграции)
 > 
-> > php artisan migrate
-
-   > выполнить команду (заполнить тестовыми данными)
-> 
-> > php artisan db:seed
+> > php artisan project-install
 
    > выполнить команду (запустить сервер Laravel)
 > 

@@ -97,7 +97,7 @@ class ControlTimeController extends Controller
             return new FrontendResponse(false, null, 'Ошибка: Время ухода раньше, чем время прихода!');
         }
 
-        if (null !== $this->findExistsTime($startDate, $endDate, $workerId)) {
+        if (null !== $this->findExistsTime($startDate, $workerId)) {
             return new FrontendResponse(false, null,'Предупреждение: Данные за этот день уже внесены!');
         }
 
@@ -118,11 +118,10 @@ class ControlTimeController extends Controller
      * Поиск существующей записи за конкретную дату
      *
      * @param \DateTime $startDate
-     * @param \DateTime $endDate
      * @param int $workerId
      * @return mixed
      */
-    private function findExistsTime(\DateTime $startDate, \DateTime $endDate, $workerId)
+    private function findExistsTime(\DateTime $startDate, $workerId)
     {
         return ControlTime::query()
             ->whereRaw("YEAR(start_date) = :year", ['year' => (int)$startDate->format('Y')])

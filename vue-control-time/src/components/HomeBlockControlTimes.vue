@@ -14,7 +14,7 @@
                     </thead>
                     <tr v-for="item in times">
                         <td>{{ item.worker.family }} {{ item.worker.name }}</td>
-                        <td>{{ item.date }}</td>
+                        <td>{{ item.start_date | dateOnlyMd }}</td>
                         <td>{{ item.start_time }}</td>
                         <td>{{ item.end_time }}</td>
                     </tr>
