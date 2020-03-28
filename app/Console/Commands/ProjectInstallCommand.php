@@ -16,5 +16,6 @@ class ProjectInstallCommand extends Command
         Artisan::call('key:generate');
         Artisan::call('migrate');
         Artisan::call('db:seed');
+        Artisan::call('compile-font-from-dompdf');
     }
 }
