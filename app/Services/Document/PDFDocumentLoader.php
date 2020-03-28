@@ -4,13 +4,13 @@ namespace App\Services\Document;
 
 use Dompdf\Dompdf;
 
-class PDFDocumentLoader
+class PDFDocumentLoader implements DocumentLoaderInterface
 {
     /**
      * @param string $templateAlias
      * @param array $templateData
      */
-    public static function load(string $templateAlias, array $templateData): void
+    public static function stream(string $templateAlias, array $templateData): void
     {
         $domPdf = self::createDomPdf();
 

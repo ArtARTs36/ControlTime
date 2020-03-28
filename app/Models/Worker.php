@@ -46,4 +46,11 @@ class Worker extends Model
             $this->patronymic,
         ]);
     }
+
+    public function getSign(): string
+    {
+        return $this->family . ' ' .
+            mb_substr($this->name, 0, 1) . ' '.
+            mb_substr($this->patronymic, 0, 1);
+    }
 }

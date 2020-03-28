@@ -6,6 +6,7 @@ import WorkerList from "../components/Worker/WorkerList";
 import WorkerEdit from "../components/Worker/WorkerEdit";
 import TimeList from "../components/Time/TimeList";
 import TimeCreate from "../components/Time/TimeCreate";
+import WorkerVacationApplication from "../components/Worker/WorkerVacationApplication";
 
 Vue.use(VueRouter);
 
@@ -27,8 +28,13 @@ const routes = [
   },
   {
     path: '/workers/create',
-    name: 'workerEdit',
+    name: 'workerCreate',
     component: WorkerEdit,
+  },
+  {
+    path: '/workers/:workerId/vacation-application/create',
+    name: 'workerVacationApplication',
+    component: WorkerVacationApplication,
   },
   {
     path: '/times/all',

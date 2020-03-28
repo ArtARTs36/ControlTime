@@ -37,6 +37,10 @@
                                     <i class="far fa-calendar-alt" title="Посмотреть посещаемость"></i>
                                 </router-link>
 
+                                <router-link :to="{ name: 'workerVacationApplication', params: { workerId: item.id }}">
+                                    <i class="fas fa-plane ml-2" title="Создать заявление на отпуск"></i>
+                                </router-link>
+
                                 <a @click="downloadReport(item.id)">
                                     <i class="fas fa-download ml-2" title="Скачать отчет о посещаемости"></i>
                                 </a>
