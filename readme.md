@@ -29,10 +29,7 @@ ControlTime - Приложение для учета посещаемости с
 >
 > `yarn serve`
 
-## Запуск под докером
-- docker network create controltime_testing_get
-- docker-compose build
-- docker-compose up -d
+## Установка и запуск под докером
 - sh docker-project-install.sh
 - Открыть http://localhost:8085
 
@@ -54,3 +51,4 @@ ControlTime - Приложение для учета посещаемости с
 - docker ps
 - docker stop $(docker ps -a -q)
 - docker rm $(docker ps -a -q) --force
+- docker system prune

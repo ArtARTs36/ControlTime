@@ -1,0 +1,3 @@
+*.md
+.phpunit.result.cache
+.idea
