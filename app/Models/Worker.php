@@ -37,4 +37,13 @@ class Worker extends Model
     {
         return $this->hasMany(ControlTime::class);
     }
+
+    public function getFullName(): string
+    {
+        return implode(' ', [
+            $this->family,
+            $this->name,
+            $this->patronymic,
+        ]);
+    }
 }

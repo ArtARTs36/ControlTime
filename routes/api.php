@@ -19,4 +19,5 @@ Route::prefix('times')->group(function() {
         'ControlTimeController@ViewListAction'
     );
     Route::post('/','ControlTimeController@CreateAction');
+    Route::get('/report/worker/{worker}','ControlTimeController@report');
 });

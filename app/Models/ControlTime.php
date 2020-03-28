@@ -10,11 +10,11 @@ use Illuminate\Database\Query\Builder;
  *
  * @property integer $id - Идентификатор
  *
- * @property \DateTime $start_date - Дата прихода
- * @property \DateTime $start_time - Время прихода
+ * @property string $start_date - Дата прихода
+ * @property string $start_time - Время прихода
  *
- * @property \DateTime $end_date - Дата ухода
- * @property \DateTime $end_time - Время ухода
+ * @property string $end_date - Дата ухода
+ * @property string $end_time - Время ухода
  *
  * @property integer $worker_id - Идентификатор работника
  *
@@ -49,5 +49,26 @@ class ControlTime extends Model
     public function setWorker(Worker $worker)
     {
         $this->worker_id = $worker->id;
+    }
+
+    public function getAttendHours()
+    {
+        $diff = $this->getEnd()->getTimestamp() - $this->getStart()->getTimestamp();
+
+        return $diff / 60 / 60;
+    }
+
+    public function getStart(): \DateTime
+    {
+        $fullDate = $this->start_date . ' ' . $this->start_time;
+
+        return new \DateTime($fullDate);
+    }
+
+    public function getEnd(): \DateTime
+    {
+        $fullDate = $this->end_date . ' ' . $this->end_time;
+
+        return new \DateTime($fullDate);
     }
 }

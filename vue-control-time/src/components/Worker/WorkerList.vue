@@ -37,6 +37,10 @@
                                     <i class="far fa-calendar-alt" title="Посмотреть посещаемость"></i>
                                 </router-link>
 
+                                <a @click="downloadReport(item.id)">
+                                    <i class="fas fa-download ml-2" title="Скачать отчет о посещаемости"></i>
+                                </a>
+
                                 <router-link :to="{ name: 'timeCreate', params: { workerId: item.id }}">
                                     <i class="fas fa-plus ml-2" title="Добавить отметку о посещении"></i>
                                 </router-link>
@@ -92,6 +96,9 @@
         },
 
         methods: {
+            downloadReport(workerId) {
+                window.location.href = API_URL + '/times/report/worker/' + workerId;
+            },
             loadWorkers(page) {
                 if (page === undefined) {
                     page = this.currentPage;

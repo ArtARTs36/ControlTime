@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Models\ControlTime;
+use App\Models\Worker;
 use App\Services\ControlTimeService;
+use App\Services\Document\DocumentService;
 use Illuminate\Http\Request;
 
 class ControlTimeController extends Controller
@@ -91,6 +93,16 @@ class ControlTimeController extends Controller
         ]);
 
         return new FrontendResponse(true, $time);
+    }
+
+    /**
+     * Получить отчет о посещаемости сотрудника
+     *
+     * @param Worker $worker
+     */
+    public function report(Worker $worker): void
+    {
+        DocumentService::streamReportTime($worker);
     }
 }
 
