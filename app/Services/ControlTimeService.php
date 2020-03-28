@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\ControlTime;
+use App\Models\Worker;
+use Illuminate\Support\Collection;
 
 class ControlTimeService
 {
@@ -59,5 +61,32 @@ class ControlTimeService
         }
 
         return null;
+    }
+
+    public static function findByWorker(Worker $worker): Collection
+    {
+        return ControlTime::where('worker_id', $worker->id)
+            ->get();
+    }
+
+    /**
+     * @param ControlTime[]|Collection $times
+     * @return int
+     */
+    public static function bringLatenessCount(Collection $times): int
+    {
+        $count = 0;
+        foreach ($times as $time) {
+            if ($time->isLate()) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    public static function findAndBringLatenessCount(Worker $worker)
+    {
+        return self::bringLatenessCount(self::findByWorker($worker));
     }
 }

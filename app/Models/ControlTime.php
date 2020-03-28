@@ -71,4 +71,11 @@ class ControlTime extends Model
 
         return new \DateTime($fullDate);
     }
+
+    public function isLate()
+    {
+        $startHour = env('START_WORK_HOUR', 9);
+
+        return $this->getStart()->format('h') > $startHour;
+    }
 }

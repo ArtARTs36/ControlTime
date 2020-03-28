@@ -9,6 +9,11 @@
 Посещаемость сотрудника: {{ $worker->getFullName() }}
 </center>
 
+- Количество опозданий: {{ \App\Services\ControlTimeService::bringLatenessCount($times) }}
+
+<br/>
+<br/>
+
 <table>
     <tr>
         <td>
@@ -28,6 +33,9 @@
         </td>
         <td>
             Пробыл часов
+        </td>
+        <td>
+            Опоздал ли
         </td>
     </tr>
 
@@ -50,6 +58,9 @@
             </td>
             <td>
                 {{ $time->getAttendHours() }}
+            </td>
+            <td>
+                {{ $time->isLate() ? 'да' : 'нет' }}
             </td>
         </tr>
     @endforeach
