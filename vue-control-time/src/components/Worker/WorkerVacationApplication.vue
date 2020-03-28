@@ -124,11 +124,6 @@
                 axios.get(API_URL + '/workers/' + this.workerId)
                     .then(response => {
                         this.worker = response.data;
-
-                        this.hiredDate = new Date(this.worker.hired_date);
-                        if (this.hiredDate > this.minDate) {
-                            this.minDate = this.hiredDate;
-                        }
                     })
                     .catch(e => {
                         this.error = e;
