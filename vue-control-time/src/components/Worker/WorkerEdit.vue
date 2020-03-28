@@ -69,9 +69,9 @@
 
                 let request;
                 if (this.typeAction === 'put') {
-                    request = axios.put(API_URL + '/worker/' + this.workerId, options);
+                    request = axios.put(API_URL + '/workers/' + this.workerId, options);
                 } else {
-                    request = axios.post(API_URL + '/worker/', options);
+                    request = axios.post(API_URL + '/workers/', options);
                 }
 
                 request.then((response) => {
@@ -88,7 +88,7 @@
                 .finally(() => (this.isOpenModalResult = true));
             },
             loadWorker() {
-                axios.get(API_URL + '/worker/' + this.workerId)
+                axios.get(API_URL + '/workers/' + this.workerId)
                     .then(response => {
                         this.worker = response.data;
                     })

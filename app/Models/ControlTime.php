@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Class ControlTime
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $worker_id - Идентификатор работника
  *
  * @package App
+ * @mixin Builder
  */
 class ControlTime extends Model
 {

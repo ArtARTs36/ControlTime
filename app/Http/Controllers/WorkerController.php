@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Models\Worker;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class WorkerController extends Controller
 {
@@ -19,31 +19,27 @@ class WorkerController extends Controller
      * @param string $sortKey
      * @param string $sortDirection
      * @param int $count
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function viewListAction(
+    public function index(
         $page = null,
         $sortKey = 'id',
         $sortDirection = 'desc',
         $count = self::COUNT_WORKERS_IN_ONE_PAGE
     )
     {
-        $workers = DB::table(Worker::TABLE)->orderBy($sortKey, $sortDirection)
+        return Worker::orderBy($sortKey, $sortDirection)
             ->paginate($count, ['*'], 'page_workers', $page);
-
-        return $workers;
     }
 
     /**
      * Получить информацию о работнике
      *
-     * @param $id
-     * @return mixed
+     * @param Worker $worker
+     * @return Worker
      */
-    public function viewWorkerAction($id)
+    public function show(Worker $worker): Worker
     {
-        $worker = Worker::find($id);
-
         return $worker;
     }
 
@@ -53,7 +49,7 @@ class WorkerController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function createAction(Request $request)
+    public function store(Request $request)
     {
         $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
 
@@ -65,21 +61,15 @@ class WorkerController extends Controller
     /**
      * Обновление данных о работнике
      *
-     * @param $id
+     * @param Worker $worker
      * @param Request $request
      * @return mixed
      */
-    public function updateAction($id, Request $request)
+    public function update(Worker $worker, Request $request): FrontendResponse
     {
         $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
 
-        $worker = Worker::find($id);
-
-        foreach (Worker::REQUIRED_FIELDS as $field) {
-            $worker->$field = $entryData[$field];
-        }
-
-        $worker->save();
+        $worker->update($entryData);
 
         return new FrontendResponse(true, $worker);
     }
@@ -87,16 +77,11 @@ class WorkerController extends Controller
     /**
      * Удаление работника
      *
-     * @param integer $id
+     * @param Worker $worker
      * @return array
      */
-    public function deleteAction($id)
+    public function destroy(Worker $worker): array
     {
-        $worker = Worker::find($id);
-        if ($worker == null) {
-            throw new \LogicException("Работник с id = {$id} не найден!");
-        }
-
         $worker->delete();
 
         return ['success' => true];

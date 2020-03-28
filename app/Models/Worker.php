@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Class Worker
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTime $hired_date - Дата принятия на работу
  *
  * @package App
+ * @mixin Builder
  */
 class Worker extends Model
 {

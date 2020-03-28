@@ -51,7 +51,7 @@
         },
 
         created() {
-            axios.get(API_URL + '/worker/page-1/sort/id-asc/count-7')
+            axios.get(API_URL + '/workers/page-1/sort/id-asc/count-7')
                 .then(response => {
                     this.workers = response.data.data;
                 })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Models\ControlTime;
+use App\Services\ControlTimeService;
 use Illuminate\Http\Request;
 
 class ControlTimeController extends Controller
@@ -35,16 +36,16 @@ class ControlTimeController extends Controller
         $times->selectRaw('*, control_times.id as time_id');
 
         if ($workerId !== null) {
-            $times->where('worker_id', '=', (int) $workerId);
+            $times->where('worker_id', (int) $workerId);
         }
 
         if ($sortKey == 'date') {
             $times->orderBy('start_date', $sortDirection);
         } elseif ($sortKey == 'worker') {
             $times->join('workers as w', 'control_times.worker_id', '=', 'w.id')
-                ->orderBy('w.family', $sortDirection)->orderBy('w.name', $sortDirection);
-        }
-        else {
+                ->orderBy('w.family', $sortDirection)
+                ->orderBy('w.name', $sortDirection);
+        } else {
             $times->orderBy($sortKey, $sortDirection);
         }
 
@@ -67,38 +68,16 @@ class ControlTimeController extends Controller
         $workerId = (int) $data['worker_id'];
 
         $startDate = new \DateTime($data['start_date']);
-        $startMonth = $startDate->format('m');
-        $startDay = $startDate->format('d');
-
         $endDate = new \DateTime($data['end_date']);
-        $endMonth = $endDate->format('m');
-        $endDay = $endDate->format('d');
-
         $startTime = new \DateTime($data['start_time']);
         $endTime = new \DateTime($data['end_time']);
 
-        // Надеюсь 31 декабря люди не работают ;)
-        if ($startDate->format('Y') < $endDate->format('Y')) {
-            return new FrontendResponse(false, null, 'Ошибка: не совпадают года!');
+        if ($error = ControlTimeService::isNotCorrectDates($startDate, $endDate, $startTime, $endTime)) {
+            return new FrontendResponse(false, null, $error);
         }
 
-        if (
-            $startMonth == $endMonth &&
-            $endDay < $startDay
-        ) {
-            return new FrontendResponse(false, null, 'Ошибка: День ухода раньше дня прихода!');
-        }
-
-        if (
-            $startMonth == $endMonth &&
-            $startDay == $endDay &&
-            $endTime->format('H') < $startTime->format('H')
-        ) {
-            return new FrontendResponse(false, null, 'Ошибка: Время ухода раньше, чем время прихода!');
-        }
-
-        if (null !== $this->findExistsTime($startDate, $workerId)) {
-            return new FrontendResponse(false, null,'Предупреждение: Данные за этот день уже внесены!');
+        if (null !== ControlTimeService::findExistsTime($startDate, $workerId)) {
+            return new FrontendResponse(false, null, __('control_time.save.failed.exists'));
         }
 
         $time = ControlTime::create([
@@ -112,25 +91,6 @@ class ControlTimeController extends Controller
         ]);
 
         return new FrontendResponse(true, $time);
-    }
-
-    /**
-     * Поиск существующей записи за конкретную дату
-     *
-     * @param \DateTime $startDate
-     * @param int $workerId
-     * @return mixed
-     */
-    private function findExistsTime(\DateTime $startDate, $workerId)
-    {
-        return ControlTime::query()
-            ->whereRaw("YEAR(start_date) = :year", ['year' => (int)$startDate->format('Y')])
-            ->whereRaw("MONTH(start_date) = :month", ['month' => (int)$startDate->format('m')])
-            ->whereRaw("DAY(start_date) = :day", ['day' => (int)$startDate->format('d')])
-
-            ->whereRaw("worker_id = {$workerId}")
-            ->get()
-            ->first();
     }
 }
 

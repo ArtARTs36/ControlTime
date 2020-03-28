@@ -95,7 +95,7 @@
                     page = this.currentPage;
                 }
 
-                const URL = API_URL + '/worker/page-' + page + '/sort/id-asc';
+                const URL = API_URL + '/workers/page-' + page + '/sort/id-asc';
 
                 axios.get(URL)
                     .then(response => {
@@ -113,7 +113,7 @@
                 this.loadWorkers(page);
             },
             removeWorker(id) {
-                axios.delete(API_URL + '/worker/' + id)
+                axios.delete(API_URL + '/workers/' + id)
                     .then(response => {
                         this.refreshWorkers();
                     })
