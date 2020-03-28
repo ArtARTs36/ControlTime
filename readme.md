@@ -42,6 +42,9 @@ ControlTime - Приложение для учета посещаемости с
     
 * Сборка фронта: <br/>
     `sh docker-yarn-build.sh`
+    
+* Сборка зависимсотей бэка: <br/>
+    `sh docker-composer-install.sh`
 
 ## Команды докера
 - docker-compose up -d
