@@ -89,4 +89,68 @@ class ControlTimeService
     {
         return self::bringLatenessCount(self::findByWorker($worker));
     }
+
+    /**
+     * Подсчитать средние часы пребывания на рабочем месте
+     *
+     * @param Collection $times
+     * @return int
+     */
+    public static function bringMediumHour(Collection $times): int
+    {
+        $hoursSum = self::bringAttendHours($times);
+
+        return (int) $hoursSum / $times->count();
+    }
+
+    /**
+     * Посчитать средний час появления на рабочем месте
+     *
+     * @param Collection|ControlTime[] $times
+     * @return int
+     */
+    public static function bringMediumStartHour(Collection $times): int
+    {
+        $hourSum = 0;
+
+        foreach ($times as $time) {
+            $hourSum += $time->getStart()->format('h');
+        }
+
+        return $hourSum / $times->count();
+    }
+
+    /**
+     * Посчитать средний час ухода с рабочего места
+     *
+     * @param Collection|ControlTime[] $times
+     * @return int
+     */
+    public static function bringMediumEndHour(Collection $times): int
+    {
+        $hourSum = 0;
+
+        foreach ($times as $time) {
+            $hourSum += $time->getEnd()->format('h');
+        }
+
+        return $hourSum / $times->count();
+    }
+
+    /**
+     * Подсчет часов пребывания на рабочем месте
+     *
+     * @param Collection|ControlTime[] $times
+     * @return int|mixed
+     */
+    public static function bringAttendHours(Collection $times): int
+    {
+        $hoursSum = 0;
+
+        foreach ($times as $time) {
+            $hoursSum += $time->getAttendHours();
+        }
+
+        return (int) $hoursSum;
+    }
 }

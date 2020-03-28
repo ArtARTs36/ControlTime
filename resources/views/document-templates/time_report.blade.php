@@ -9,7 +9,11 @@
 Посещаемость сотрудника: {{ $worker->getFullName() }}
 </center>
 
-- Количество опозданий: {{ \App\Services\ControlTimeService::bringLatenessCount($times) }}
+- Всего часов: {{ \App\Services\ControlTimeService::bringAttendHours($times) }} <br/>
+- В среднем часов в день: {{ \App\Services\ControlTimeService::bringMediumHour($times) }} <br/>
+- Средний час появления на рабочем месте: {{ \App\Services\ControlTimeService::bringMediumStartHour($times) }} <br/>
+- Средний час ухода с рабочего места: {{ \App\Services\ControlTimeService::bringMediumEndHour($times) }} <br/>
+- Количество опозданий: {{ \App\Services\ControlTimeService::bringLatenessCount($times) }} <br/>
 
 <br/>
 <br/>
