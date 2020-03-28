@@ -23,7 +23,7 @@ class Worker extends Model
     const TABLE = 'workers';
 
     const REQUIRED_FIELDS = [
-        'name', 'patronymic', 'family', 'phone'
+        'name', 'patronymic', 'family', 'phone', 'hired_date',
     ];
 
     protected $table = self::TABLE;

@@ -9,7 +9,17 @@
                     <mdb-input label="Отчество" v-model="worker.patronymic" />
                     <mdb-input label="Фамилия" v-model="worker.family" />
                     <mdb-input label="Номер телефона" v-model="worker.phone" />
+
+                    <div class="form-group">
+                        Дата принятия на работу
+                        <mdl-datepicker
+                            orientation="landscape"
+                            v-model="worker.hired_date"
+                            :default="worker.hired_date"
+                        ></mdl-datepicker>
+                    </div>
                 </mdb-card-text>
+
                 <mdb-btn style="width:100%" color="default">Сохранить</mdb-btn>
             </form>
             <router-link v-bind:to="linkList">
@@ -26,6 +36,7 @@
     import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbInput} from 'mdbvue';
     import axios from 'axios';
     import ModalResult from "../ModalResult";
+    import MdlDatepicker from 'vue-mdl-datepicker';
     export default {
         components: {
             mdbCard,
@@ -35,7 +46,8 @@
             mdbCardText,
             mdbBtn,
             mdbInput,
-            ModalResult
+            ModalResult,
+            MdlDatepicker,
         },
 
         data() {
@@ -44,7 +56,8 @@
                 firstName: null,
                 patronymic: null,
                 family: null,
-                phone: null
+                phone: null,
+                hired_date: new Date(),
             };
 
             return {
@@ -63,9 +76,11 @@
             save() {
                 this.resultSave = null;
 
-                const options = {
-                    'entryData': this.worker
+                let options = {
+                    'entryData': Object.assign({}, this.worker)
                 };
+
+                options.entryData.hired_date = options.entryData.hired_date.toUTCString();
 
                 let request;
                 if (this.typeAction === 'put') {

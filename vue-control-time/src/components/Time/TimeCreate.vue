@@ -80,7 +80,7 @@
 
         data() {
             const blankWorker = {
-                id: 0,
+                id: null,
                 firstName: null,
                 family: null,
             };
@@ -144,12 +144,7 @@
 
                 axios.post(API_URL + '/times/', options)
                     .then((response) => {
-                        if (response.data.success) {
-                            this.resultSave = 'Данные успешно сохранены!';
-                            this.worker = response.data.entryData;
-                        } else {
-                            this.resultSave = response.data.message;
-                        }
+                        this.resultSave = (response.data.success) ? 'Данные успешно сохранены!' : response.data.message;
                     })
                     .catch((error) => {
                         this.resultSave = error;
