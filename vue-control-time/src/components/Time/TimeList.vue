@@ -9,34 +9,36 @@
                 <option v-for="sort in sortVars" :value="sort.prepare">{{ sort.description }}</option>
             </select>
             <mdb-card-text>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" v-if="!workerId">Сотрудник</th>
-                        <th scope="col">Дата прихода</th>
-                        <th scope="col">Время прихода</th>
-                        <th scope="col">Дата ухода</th>
-                        <th scope="col">Время ухода</th>
-                    </tr>
-                    </thead>
-                    <tr v-for="item in times">
-                        <td>{{ item.time_id }}</td>
-                        <td v-if="!workerId">
-                            <router-link :to="{ name: 'workerEdit', params: { id: item.worker.id }}">
-                                {{ item.worker.family}} {{ item.worker.name }}
-                            </router-link>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" v-if="!workerId">Сотрудник</th>
+                            <th scope="col">Дата прихода</th>
+                            <th scope="col">Время прихода</th>
+                            <th scope="col">Дата ухода</th>
+                            <th scope="col">Время ухода</th>
+                        </tr>
+                        </thead>
+                        <tr v-for="item in times">
+                            <td scope="row">{{ item.time_id }}</td>
+                            <td scope="row" v-if="!workerId">
+                                <router-link :to="{ name: 'workerEdit', params: { id: item.worker.id }}">
+                                    {{ item.worker.family}} {{ item.worker.name }}
+                                </router-link>
 
-                            <router-link :to="{ name: 'timeListByWorker', params: { workerId: item.worker.id }}">
-                                <i class="far fa-calendar-alt" title="Посмотреть всю посещаемость сотрудника"></i>
-                            </router-link>
-                        </td>
-                        <td>{{ item.start_date }} ({{ item.start_date | dayOfWeek }})</td>
-                        <td>{{ item.start_time}}</td>
-                        <td>{{ item.end_date }} ({{ item.end_date | dayOfWeek }})</td>
-                        <td>{{ item.end_time }}</td>
-                    </tr>
-                </table>
+                                <router-link :to="{ name: 'timeListByWorker', params: { workerId: item.worker.id }}">
+                                    <i class="far fa-calendar-alt" title="Посмотреть всю посещаемость сотрудника"></i>
+                                </router-link>
+                            </td>
+                            <td scope="row">{{ item.start_date }} ({{ item.start_date | dayOfWeek }})</td>
+                            <td scope="row">{{ item.start_time}}</td>
+                            <td scope="row">{{ item.end_date }} ({{ item.end_date | dayOfWeek }})</td>
+                            <td scope="row">{{ item.end_time }}</td>
+                        </tr>
+                    </table>
+                </div>
             </mdb-card-text>
 
             <router-link :to="{ name: 'timeList' }" v-if="workerId > 0">

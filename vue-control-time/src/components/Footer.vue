@@ -1,6 +1,6 @@
 <template>
     <mdb-footer color="stylish-color-dark" class="page-footer font-small">
-        <div class="footer-copyright text-center py-3 stylish-color-dark">
+        <div class="footer-copyright text-center py-3 stylish-color-dark fixed-bottom">
             <mdb-container fluid>
                 &copy; 2020 Copyright Artem Ukrainsky
             </mdb-container>

@@ -3,22 +3,24 @@
         <mdb-card-body>
             <mdb-card-title>Посещения</mdb-card-title>
             <mdb-card-text>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Сотрудник</th>
-                            <th>Дата</th>
-                            <th>Время прихода</th>
-                            <th>Время ухода</th>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Сотрудник</th>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Время прихода</th>
+                                <th scope="col">Время ухода</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="item in times">
+                            <td scope="row">{{ item.worker.family }} {{ item.worker.name }}</td>
+                            <td scope="row">{{ item.start_date | dateOnlyMd }}</td>
+                            <td scope="row">{{ item.start_time }}</td>
+                            <td scope="row">{{ item.end_time }}</td>
                         </tr>
-                    </thead>
-                    <tr v-for="item in times">
-                        <td>{{ item.worker.family }} {{ item.worker.name }}</td>
-                        <td>{{ item.start_date | dateOnlyMd }}</td>
-                        <td>{{ item.start_time }}</td>
-                        <td>{{ item.end_time }}</td>
-                    </tr>
-                </table>
+                    </table>
+                </div>
             </mdb-card-text>
             <router-link to="/times/all">
                 <mdb-btn color="primary">Открыть список всех посещений</mdb-btn>

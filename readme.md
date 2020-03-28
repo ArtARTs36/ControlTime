@@ -1,6 +1,7 @@
--- ControlTime
+ControlTime - Приложение для учета посещаемости сотрудников
+-----
 
-Порядок установки и запуска
+#### Порядок установки и запуска
 
    > скачать репозиторий на локальную машину
    
@@ -8,25 +9,25 @@
 
    > выполнить команду
 > 
-> > composer install
+>  `composer install`
 
    > выполнить команду
 > 
-> > php artisan project-install
+> `php artisan project-install`
 
    > выполнить команду (запустить сервер Laravel)
 > 
-> > php artisan serve --port=8888
+> `php artisan serve --port=8888`
 
    > перейти в папку "vue-control-time"
 
    > выполнить команду
 >
-> > yarn install
+> `yarn install`
 
    > выполнить команду (запустить сервер)
 >
-> > yarn serve
+> `yarn serve`
 
 ## Запуск под докером
 - docker network create controltime_testing_get
@@ -36,11 +37,11 @@
 - Открыть http://localhost:8085
 
 ## Команды проекта под докером
-* Проверка версий установленных пакетов:
-    -- sh docker-check-versions-packages.sh
+* Проверка версий установленных пакетов: <br/>
+    `sh docker-check-versions-packages.sh`
     
 * Сборка фронта: <br/>
-    -- sh docker-yarn-build.sh
+    `sh docker-yarn-build.sh`
 
 ## Команды докера
 - docker-compose up -d
