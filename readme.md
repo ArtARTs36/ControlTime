@@ -10,23 +10,43 @@
 > 
 > > composer install
 
-   > выполнить команду (накатить миграции)
+   > выполнить команду
 > 
 > > php artisan project-install
 
    > выполнить команду (запустить сервер Laravel)
 > 
-> > php artisan serve
-
-   > убедиться, что сервер поднялся на адресе 
-> > http://localhost:8000
+> > php artisan serve --port=8888
 
    > перейти в папку "vue-control-time"
 
    > выполнить команду
 >
-> > npm install
+> > yarn install
 
    > выполнить команду (запустить сервер)
 >
-> > npm run serve
+> > yarn serve
+
+## Запуск под докером
+- docker network create controltime_testing_get
+- docker-compose build
+- docker-compose up -d
+- sh docker-project-install.sh
+- Открыть http://localhost:8085
+
+## Команды проекта под докером
+* Проверка версий установленных пакетов:
+    -- sh docker-check-versions-packages.sh
+    
+* Сборка фронта: <br/>
+    -- sh docker-yarn-build.sh
+
+## Команды докера
+- docker-compose up -d
+- docker exec -it <имя или id контейнера> <shell>
+- docker exec -it <имя или id контейнера> bash
+- docker exec -it d18a28c93660 bash
+- docker ps
+- docker stop $(docker ps -a -q)
+- docker rm $(docker ps -a -q) --force

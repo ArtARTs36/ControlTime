@@ -151,7 +151,7 @@
                     .finally(() => (this.isOpenModalResult = true));
             },
             loadWorker() {
-                axios.get(API_URL + '/worker/' + this.workerId)
+                axios.get(API_URL + '/workers/' + this.workerId)
                     .then(response => {
                         this.worker = response.data;
 
