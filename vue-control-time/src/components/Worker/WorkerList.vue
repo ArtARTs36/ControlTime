@@ -27,7 +27,7 @@
                                 <mdb-badge color="danger" v-else>не указан</mdb-badge>
                             </td>
                             <td scope="row">
-                                {{ item.hired_date }}
+                                {{ item.hired_date | dateTime }}
                             </td>
                             <td scope="row">
                                 {{ item.hired_date | renderExperience}}

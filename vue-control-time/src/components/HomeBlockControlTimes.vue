@@ -15,9 +15,9 @@
                         </thead>
                         <tr v-for="item in times">
                             <td scope="row">{{ item.worker.family }} {{ item.worker.name }}</td>
-                            <td scope="row">{{ item.start_date | dateOnlyMd }}</td>
-                            <td scope="row">{{ item.start_time }}</td>
-                            <td scope="row">{{ item.end_time }}</td>
+                            <td scope="row">{{ item.start_date | dateOnlyDmy }}</td>
+                            <td scope="row">{{ item.start_time | formatTime }}</td>
+                            <td scope="row">{{ item.end_time | formatTime }}</td>
                         </tr>
                     </table>
                 </div>

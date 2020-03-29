@@ -33,9 +33,9 @@
                                 </router-link>
                             </td>
                             <td scope="row">{{ item.start_date }} ({{ item.start_date | dayOfWeek }})</td>
-                            <td scope="row">{{ item.start_time}}</td>
+                            <td scope="row">{{ item.start_time | formatTime }}</td>
                             <td scope="row">{{ item.end_date }} ({{ item.end_date | dayOfWeek }})</td>
-                            <td scope="row">{{ item.end_time }}</td>
+                            <td scope="row">{{ item.end_time | formatTime }}</td>
                         </tr>
                     </table>
                 </div>

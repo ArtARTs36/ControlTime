@@ -19,10 +19,25 @@ Vue.filter('cutText', function (text, symbolsCount) {
       : text;
 });
 
-Vue.filter('dateOnlyMd', function (originalDate) {
+Vue.filter('dateOnlyDm', function (originalDate) {
     let date = new Date(originalDate);
 
     return date.getDate() + '/' + (date.getMonth() + 1);
+});
+
+Vue.filter('dateOnlyDmy', function (originalDate) {
+    let date = new Date(originalDate);
+
+    let year = date.getFullYear() + '';
+    year = year.substr(2, 2);
+
+    return date.getDate() + '-' + (date.getMonth() + 1) + '-' + year;
+});
+
+Vue.filter('formatTime', function (originalTime) {
+    let times = originalTime.split(':', 2);
+
+    return times[0] + ':' + times[1];
 });
 
 /**
@@ -50,6 +65,10 @@ Vue.filter('dayOfWeek', function (string) {
     let date = new Date(string);
 
     return daysOfWeek[date.getDay()];
+});
+
+Vue.filter('dateTime', function (string) {
+    return string.substr(0, string.length - 3);
 });
 
 /**
