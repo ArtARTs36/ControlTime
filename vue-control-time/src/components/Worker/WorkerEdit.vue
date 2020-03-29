@@ -76,11 +76,11 @@
             save() {
                 this.resultSave = null;
 
-                let options = {
-                    'entryData': Object.assign({}, this.worker)
-                };
+                let options = Object.assign({}, this.worker);
 
-                options.entryData.hired_date = options.entryData.hired_date.toUTCString();
+                if (typeof options.hired_date === "object") {
+                    options.hired_date = options.hired_date.toUTCString();
+                }
 
                 let request;
                 if (this.typeAction === 'put') {

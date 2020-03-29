@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
 use App\Http\Requests\VacationApplicationRequest;
+use App\Http\Requests\WorkerRequest;
 use App\Http\Response\DocumentResponse;
 use App\Models\Worker;
 use App\Services\Document\Document;
@@ -51,14 +52,12 @@ class WorkerController extends Controller
     /**
      * Создать работника
      *
-     * @param Request $request
+     * @param WorkerRequest $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(WorkerRequest $request)
     {
-        $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
-
-        $worker = Worker::create($entryData);
+        $worker = Worker::create($request->toArray());
 
         return new FrontendResponse(true, $worker);
     }
@@ -67,14 +66,12 @@ class WorkerController extends Controller
      * Обновление данных о работнике
      *
      * @param Worker $worker
-     * @param Request $request
+     * @param WorkerRequest $request
      * @return mixed
      */
-    public function update(Worker $worker, Request $request): FrontendResponse
+    public function update(Worker $worker, WorkerRequest $request): FrontendResponse
     {
-        $entryData = RequestHelper::getEntryData($request, Worker::REQUIRED_FIELDS);
-
-        $worker->update($entryData);
+        $worker->update($request->toArray());
 
         return new FrontendResponse(true, $worker);
     }

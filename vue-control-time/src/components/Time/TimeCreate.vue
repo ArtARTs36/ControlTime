@@ -133,13 +133,11 @@
                 this.resultSave = null;
 
                 const options = {
-                    'entryData': {
-                        'worker_id': this.worker.id,
-                        'start_date': this.time.start_date.toLocaleDateString(),
-                        'start_time': this.time.start_time.toLocaleTimeString(),
-                        'end_date': this.time.end_date.toLocaleDateString(),
-                        'end_time': this.time.end_time.toLocaleTimeString(),
-                    }
+                    'worker_id': this.worker.id,
+                    'start_date': this.time.start_date.toLocaleDateString(),
+                    'start_time': this.time.start_time.toLocaleTimeString(),
+                    'end_date': this.time.end_date.toLocaleDateString(),
+                    'end_time': this.time.end_time.toLocaleTimeString(),
                 };
 
                 axios.post(API_URL + '/times/', options)

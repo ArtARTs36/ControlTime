@@ -25,7 +25,7 @@ class ControlTime extends Model
 {
     const TABLE = 'control_times';
 
-    const REQUIRED_FIELDS = [
+    protected $fillable = [
         'id',
         'start_date',
         'start_time',
@@ -33,8 +33,6 @@ class ControlTime extends Model
         'end_time',
         'worker_id'
     ];
-
-    protected $fillable = self::REQUIRED_FIELDS;
 
     public $timestamps = false;
 

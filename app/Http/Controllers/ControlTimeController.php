@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\FrontendResponse;
 use App\Helpers\RequestHelper;
+use App\Http\Requests\TimeRequest;
 use App\Models\ControlTime;
 use App\Models\Worker;
 use App\Services\ControlTimeService;
@@ -57,28 +58,22 @@ class ControlTimeController extends Controller
     /**
      * Создать запись
      *
-     * @param Request $request
+     * @param TimeRequest $request
      * @return mixed
      * @throws \Exception
      */
-    public function createAction(Request $request)
+    public function createAction(TimeRequest $request)
     {
-        $data = RequestHelper::getEntryData($request, [
-            'start_date', 'end_date', 'start_time', 'end_time', 'worker_id'
-        ]);
-
-        $workerId = (int) $data['worker_id'];
-
-        $startDate = new \DateTime($data['start_date']);
-        $endDate = new \DateTime($data['end_date']);
-        $startTime = new \DateTime($data['start_time']);
-        $endTime = new \DateTime($data['end_time']);
+        $startDate = new \DateTime($request->start_date);
+        $endDate = new \DateTime($request->end_date);
+        $startTime = new \DateTime($request->start_time);
+        $endTime = new \DateTime($request->end_time);
 
         if ($error = ControlTimeService::isNotCorrectDates($startDate, $endDate, $startTime, $endTime)) {
             return new FrontendResponse(false, null, $error);
         }
 
-        if (null !== ControlTimeService::findExistsTime($startDate, $workerId)) {
+        if (null !== ControlTimeService::findExistsTime($startDate, $request->worker_id)) {
             return new FrontendResponse(false, null, __('control_time.save.failed.exists'));
         }
 
@@ -89,7 +84,7 @@ class ControlTimeController extends Controller
             'start_time' => $startTime,
             'end_time' => $endTime,
 
-            'worker_id' => $workerId
+            'worker_id' => $request->worker_id
         ]);
 
         return new FrontendResponse(true, $time);

@@ -22,13 +22,11 @@ class Worker extends Model
 {
     const TABLE = 'workers';
 
-    const REQUIRED_FIELDS = [
-        'name', 'patronymic', 'family', 'phone', 'hired_date',
-    ];
-
     protected $table = self::TABLE;
 
-    public $fillable = self::REQUIRED_FIELDS;
+    public $fillable = [
+        'name', 'patronymic', 'family', 'phone', 'hired_date',
+    ];
 
     /**
      * Получить все записи о приходах и уходах
@@ -49,8 +47,10 @@ class Worker extends Model
 
     public function getSign(): string
     {
-        return $this->family . ' ' .
-            mb_substr($this->name, 0, 1) . ' '.
-            mb_substr($this->patronymic, 0, 1);
+        return implode(' ', [
+            $this->family,
+            mb_substr($this->name, 0, 1) . '.',
+            mb_substr($this->patronymic, 0, 1) . '.',
+        ]);
     }
 }
