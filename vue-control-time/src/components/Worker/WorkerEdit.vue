@@ -53,7 +53,7 @@
         data() {
             const blankWorker = {
                 id: 0,
-                firstName: null,
+                name: null,
                 patronymic: null,
                 family: null,
                 phone: null,
@@ -68,7 +68,6 @@
                 linkList: '/workers/all',
                 workerId: this.$route.params.id,
                 worker: blankWorker,
-                typeAction: (this.$route.params.id > 0) ? 'put' : 'post'
             }
         },
 
@@ -83,7 +82,7 @@
                 }
 
                 let request;
-                if (this.typeAction === 'put') {
+                if (this.workerId > 0) {
                     request = axios.put(API_URL + '/workers/' + this.workerId, options);
                 } else {
                     request = axios.post(API_URL + '/workers/', options);
@@ -116,20 +115,20 @@
                 this.formErrors = [];
                 this.resultSave = '';
 
-                if (!this.worker.name) {
-                    this.formErrors.push('Не указано имя');
+                if (!this.worker.name || !this.isExistsNumbersOfString(this.worker.name)) {
+                    this.formErrors.push('Не корректно указано имя');
                 }
 
-                if (!this.worker.patronymic) {
-                    this.formErrors.push('Не указано отчество');
+                if (!this.worker.patronymic || !this.isExistsNumbersOfString(this.worker.patronymic)) {
+                    this.formErrors.push('Не корректно указано отчество');
                 }
 
-                if (!this.worker.family) {
-                    this.formErrors.push('Не указана фамилия');
+                if (!this.worker.family || !this.isExistsNumbersOfString(this.worker.family)) {
+                    this.formErrors.push('Не корректно указана фамилия');
                 }
 
                 if (!this.isValidPhone()) {
-                    this.formErrors.push('Не корректно указан номер');
+                    this.formErrors.push('Не корректно указан номер телефона');
                 }
 
                 if (!this.formErrors.length) {
@@ -154,6 +153,18 @@
             },
             closeModalResult() {
                 this.isOpenModalResult = false;
+            },
+            isExistsNumbersOfString(string) {
+                const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                let isExists = true;
+
+                for (let i = 0; i < numbers.length; i++) {
+                    if (string.indexOf(numbers[i]) !== -1) {
+                        isExists = false;
+                    }
+                }
+
+                return isExists;
             }
         },
         created() {
