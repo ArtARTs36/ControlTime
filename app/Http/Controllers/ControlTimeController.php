@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FrontendResponse;
-use App\Helpers\RequestHelper;
 use App\Http\Requests\TimeRequest;
 use App\Models\ControlTime;
 use App\Models\Worker;
 use App\Services\ControlTimeService;
 use App\Services\Document\DocumentService;
-use Illuminate\Http\Request;
 
 class ControlTimeController extends Controller
 {
@@ -25,7 +23,7 @@ class ControlTimeController extends Controller
      * @param int $workerId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function viewListAction(
+    public function index(
         $page = null,
         $sortKey = 'id',
         $sortDirection = 'desc',
@@ -62,7 +60,7 @@ class ControlTimeController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function createAction(TimeRequest $request)
+    public function store(TimeRequest $request)
     {
         $startDate = new \DateTime($request->start_date);
         $endDate = new \DateTime($request->end_date);
@@ -77,7 +75,7 @@ class ControlTimeController extends Controller
             return new FrontendResponse(false, null, __('control_time.save.failed.exists'));
         }
 
-        $time = ControlTime::create([
+        $time = ControlTime::create(array_merge([
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate,
 
@@ -85,7 +83,7 @@ class ControlTimeController extends Controller
             'end_time' => $endTime,
 
             'worker_id' => $request->worker_id
-        ]);
+        ]));
 
         return new FrontendResponse(true, $time);
     }

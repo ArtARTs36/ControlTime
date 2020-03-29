@@ -11,16 +11,15 @@ Route::prefix('workers')->group(function() {
 Route::apiResource('workers', 'WorkerController');
 
 Route::prefix('times')->group(function() {
-
-    Route::get('/', 'ControlTimeController@ViewListAction');
-    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}','ControlTimeController@ViewListAction');
-    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}','ControlTimeController@ViewListAction');
+    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}','ControlTimeController@index');
+    Route::get('/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}','ControlTimeController@index');
     Route::get(
         '/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}/workerId-{workerId}',
-        'ControlTimeController@ViewListAction'
+        'ControlTimeController@index'
     );
-    Route::post('/','ControlTimeController@CreateAction');
     Route::get('/report/worker/{worker}','ControlTimeController@report');
 });
+
+Route::apiResource('times', 'ControlTimeController');
 
 Route::get('document-download/{timeWithFormat}', 'DocumentController@download');
