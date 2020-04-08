@@ -7,6 +7,8 @@ import WorkerEdit from "../components/Worker/WorkerEdit";
 import TimeList from "../components/Time/TimeList";
 import TimeCreate from "../components/Time/TimeCreate";
 import WorkerVacationApplication from "../components/Worker/WorkerVacationApplication";
+import PushCreate from "../components/Push/PushCreate";
+import PushList from "../components/Push/PushList";
 
 Vue.use(VueRouter);
 
@@ -50,6 +52,16 @@ const routes = [
     path: '/times/create/worker/:workerId',
     name: 'timeCreate',
     component: TimeCreate
+  },
+  {
+    path: '/pushes/create',
+    name: 'pushCreate',
+    component: PushCreate
+  },
+  {
+    path: '/pushes/all',
+    name: 'pushList',
+    component: PushList
   },
 ];
 

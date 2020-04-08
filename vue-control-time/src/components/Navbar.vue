@@ -26,6 +26,25 @@
             </mdb-dropdown>
 
             <mdb-dropdown tag="li" class="nav-item">
+                <mdb-dropdown-toggle tag="a" navLink color="gray" slot="toggle" waves-fixed>Уведомления</mdb-dropdown-toggle>
+                <mdb-dropdown-menu>
+
+                    <router-link to="/pushes/all" tag="li">
+                        <mdb-dropdown-item>
+                            Отправленные
+                        </mdb-dropdown-item>
+                    </router-link>
+
+                    <router-link to="/pushes/create" tag="li">
+                        <mdb-dropdown-item>
+                            Отправить
+                        </mdb-dropdown-item>
+                    </router-link>
+
+                </mdb-dropdown-menu>
+            </mdb-dropdown>
+
+            <mdb-dropdown tag="li" class="nav-item">
                 <mdb-dropdown-toggle tag="a" navLink color="gray" slot="toggle" waves-fixed>Посещения</mdb-dropdown-toggle>
                 <mdb-dropdown-menu>
 

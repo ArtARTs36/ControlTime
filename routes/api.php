@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/pushes/page-{page}','PushController@index');
+Route::get('/pushes/info','PushController@info');
+Route::apiResource('pushes', 'PushController');
+
 Route::prefix('workers')->group(function() {
     Route::get('/page-{page}/sort/{sortKey}-{sortDirection}','WorkerController@index');
     Route::get('/page-{page}/sort/{sortKey}-{sortDirection}/count-{count}','WorkerController@index');
