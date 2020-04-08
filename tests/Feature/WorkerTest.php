@@ -9,13 +9,12 @@ class WorkerTest extends TestCase
 {
     public function testGetAll(): void
     {
-        $response = $this->getJson('/api/workers');
-        $array = $this->decodeResponse($response);
+        $response = $this->getJson('/api/workers')
+            ->assertOk()
+            ->decodeResponseJson();
 
-        $response->assertOk();
-
-        self::assertArrayHasKey('data', $array);
-        self::assertNotEmpty($array['data']);
+        self::assertArrayHasKey('data', $response);
+        self::assertNotEmpty($response['data']);
     }
 
     public function testGetWorker(): void
@@ -23,11 +22,10 @@ class WorkerTest extends TestCase
         /** @var Worker $exceptedWorker */
         $exceptedWorker = $this->getRandomModel(Worker::class);
 
-        $response = $this->getJson('/api/workers/' . $exceptedWorker->id);
-        $array = $this->decodeResponse($response);
+        $response = $this->getJson('/api/workers/' . $exceptedWorker->id)
+            ->assertOk()
+            ->decodeResponseJson();
 
-        $response->assertOk();
-
-        self::assertTrue($array == $exceptedWorker->toArray());
+        self::assertTrue($response == $exceptedWorker->toArray());
     }
 }
