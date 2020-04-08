@@ -7,14 +7,26 @@ use Illuminate\Support\Facades\DB;
 
 class ControlTimesTableSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         dump('...Наполнение данных о посещаемости займет некоторое время ;)');
 
         $times = ControlTimesTableSeederData::buildArray();
         shuffle($times);
 
-        DB::table('control_times')->insert($times);
+        if (env('DB_CONNECTION') === 'sqlite') {
+            $this->insertWithChunk($times);
+        } else {
+            DB::table('control_times')->insert($times);
+        }
+    }
+
+    protected function insertWithChunk(array $times): void
+    {
+        $arrays = array_chunk($times, 300);
+        foreach ($arrays as $array) {
+            DB::table('control_times')->insert($array);
+        }
     }
 }
 
