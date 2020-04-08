@@ -18,6 +18,7 @@
 <br/>
 <br/>
 
+@if($times->count() > 0)
 <table>
     <tr>
         <td>
@@ -43,10 +44,10 @@
         </td>
     </tr>
 
-    @foreach($times as $time)
+    @foreach($times as $index => $time)
         <tr>
             <td>
-                {{ $time->id }}
+                {{ ++$index }}
             </td>
             <td>
                 {{ $time->start_date }}
@@ -69,6 +70,7 @@
         </tr>
     @endforeach
 </table>
+@endif
 
 <style>
     body {

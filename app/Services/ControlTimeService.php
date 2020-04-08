@@ -99,6 +99,9 @@ class ControlTimeService
     public static function bringMediumHour(Collection $times): int
     {
         $hoursSum = self::bringAttendHours($times);
+        if ($hoursSum === 0) {
+            return 0;
+        }
 
         return (int) $hoursSum / $times->count();
     }
@@ -117,6 +120,10 @@ class ControlTimeService
             $hourSum += $time->getStart()->format('h');
         }
 
+        if ($hourSum === 0) {
+            return 0;
+        }
+
         return $hourSum / $times->count();
     }
 
@@ -132,6 +139,10 @@ class ControlTimeService
 
         foreach ($times as $time) {
             $hourSum += $time->getEnd()->format('h');
+        }
+
+        if ($hourSum === 0) {
+            return 0;
         }
 
         return $hourSum / $times->count();
