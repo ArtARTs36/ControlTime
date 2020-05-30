@@ -7,7 +7,7 @@ import './registerServiceWorker'
 import router from './router'
 import 'bootstrap-css-only/css/bootstrap.min.css';
 
-window.API_URL = 'http://localhost:8888/api';
+window.API_URL = '//'+ window.location.hostname + ':8888/api';
 
 const daysOfWeek = [
     'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'
