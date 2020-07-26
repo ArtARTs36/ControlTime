@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4100a87a9f2f7237c349e22b78750bb",
+    "content-hash": "caffeeab11997b4d9cab57bf84a61ab9",
     "packages": [
+        {
+            "name": "artarts36/pushall-sender",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ArtARTs36/PushAllSender.git",
+                "reference": "a9fff6c96200943a5808b000139c12c7273f58a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ArtARTs36/PushAllSender/zipball/a9fff6c96200943a5808b000139c12c7273f58a6",
+                "reference": "a9fff6c96200943a5808b000139c12c7273f58a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ArtARTs36\\PushAllSender\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ArtARTs36",
+                    "email": "temicska99@mail.ru"
+                }
+            ],
+            "description": "Push Sender",
+            "keywords": [
+                "api",
+                "laravel",
+                "mobile",
+                "notification",
+                "php",
+                "push",
+                "pushall.ru",
+                "symfony",
+                "yii"
+            ],
+            "time": "2020-06-25T07:22:35+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
@@ -485,6 +536,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -531,6 +583,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {

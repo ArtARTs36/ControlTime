@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class PushTest extends TestCase
 {
-    public function testStore()
+    public function testStore(): void
     {
         $this->expectsEvents(PushCreated::class);
 

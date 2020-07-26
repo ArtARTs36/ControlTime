@@ -3,14 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\PushCreated;
-use App\Senders\PushAllSender;
+use ArtARTs36\PushAllSender\Interfaces\PusherInterface;
 
 class PushCreatedListener
 {
     public function handle(PushCreated $event)
     {
-        $sender = new PushAllSender();
+        $sender = app(PusherInterface::class);
 
-        $sender->push($event->push->title, $event->push->message);
+        $sender->push($event->push->toSend());
     }
 }

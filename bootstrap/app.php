@@ -41,6 +41,16 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    \ArtARTs36\PushAllSender\Interfaces\PusherInterface::class,
+    function () {
+        return new ArtARTs36\PushAllSender\Senders\PushAllSender(
+            env('PUSHALL_CHANNEL_ID'),
+            env('PUSHALL_API_KEY')
+        );
+    }
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
