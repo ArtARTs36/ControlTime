@@ -9,7 +9,7 @@
         "artarts36/pushall-sender": "^0.3.2",
         "dompdf/dompdf": "^0.8.5",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "6.20.*",
         "laravel/tinker": "^1.0",
         "phpoffice/phpword": "^0.17.0"
     },
